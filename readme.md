@@ -4,7 +4,7 @@
 
 This solution is divided 2 pieces of functionality:
 ## Vault as a ClientSecretStore
-The IdentityServerVaultAuthFeature is an extension of the [IdentityServerAuthFeature]() that retrieves the Client Secret for a Client ID, encrypts that secret using Vault as part of the IdentityServerAuthProvider Authorization.
+The IdentityServerVaultAuthFeature is an extension of the [IdentityServerAuthFeature](https://github.com/MacLeanElectrical/servicestack-authentication-identityserver) that retrieves the Client Secret for a Client ID, encrypts that secret using Vault as part of the IdentityServerAuthProvider Authorization.
 The IdentityServer3.Contrib.Vault.ClientSecretStore is the corresponding IdentityServer3 plugin for decrypting the secret received from the ServiceStack IdentityServerAuthProvider.
 
 Read the Quick Start guide for using vault as the client secret store [here](docs/vault_clientsecretstore.md)

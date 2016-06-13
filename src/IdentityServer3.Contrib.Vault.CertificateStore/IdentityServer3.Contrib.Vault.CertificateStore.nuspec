@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>IdentityServer3.Contrib.Vault.CertificateStore</id>
+    <version>$version$</version>    
+    <authors>Stuart Banks</authors>    
+    <licenseUrl>https://www.mozilla.org/en-US/MPL/2.0/</licenseUrl>
+    <!-- <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl> -->
+    <iconUrl>https://identityserver.github.io/Documentation/assets/images/icons/IDserver_icon128.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An IdentityServer plugin for manging X509 Certificates in Vault.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>IdentityServer Vault</tags>
+    <dependencies>
+      <dependency id="BouncyCastle" version="1.8.1" />
+      <dependency id="IdentityServer3" version="2.5.0" />
+      <dependency id="Newtonsoft.Json" version="8.0.3" />
+      <dependency id="Owin" version="1.0" />
+    </dependencies>
+  </metadata>
+</package>

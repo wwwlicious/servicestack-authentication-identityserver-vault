@@ -1,5 +1,11 @@
 # ServiceStack.Auth.Vault
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ja1m6t226dwc1chd/branch/master?svg=true)](https://ci.appveyor.com/project/wwwlicious/servicestack-authentication-identityserver-vault/branch/master)
+
+* IdentityServer3.Contrib.Vault.CertificateStore [![NuGet version](https://badge.fury.io/nu/IdentityServer3.Contrib.Vault.CertificateStore.svg)](https://badge.fury.io/nu/IdentityServer3.Contrib.Vault.CertificateStore)
+* IdentityServer3.Contrib.Vault.ClientSecretStore [![NuGet version](https://badge.fury.io/nu/IdentityServer3.Contrib.Vault.ClientSecretStore.svg)](https://badge.fury.io/nu/IdentityServer3.Contrib.Vault.ClientSecretStore)
+* ServiceStack.Authentication.IdentityServer.Vault [![NuGet version](https://badge.fury.io/nu/ServiceStack.Authentication.IdentityServer.Vault.svg)](https://badge.fury.io/nu/ServiceStack.Authentication.IdentityServer.Vault)
+
 [Vault](https://www.vaultproject.io/) is a tool for managing secrets that provides a restful api.
 
 This solution is divided 2 pieces of functionality:

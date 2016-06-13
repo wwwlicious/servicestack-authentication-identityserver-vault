@@ -8,7 +8,6 @@ namespace IdentityServer3.ServiceStack.Vault.CertificateStore.Demo
     using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading;
-    using Contrib.ServiceStack;
     using Contrib.Vault.CertificateStore;
     using Contrib.Vault.CertificateStore.Options;
     using Core.Configuration;
@@ -94,8 +93,6 @@ namespace IdentityServer3.ServiceStack.Vault.CertificateStore.Demo
                 .UseInMemoryScopes(Scopes.Get())
                 .UseInMemoryUsers(Users.Get())
                 .UseInMemoryClients(Clients.Get());
-
-            factory.CustomGrantValidators.Add(new Registration<ICustomGrantValidator, ActAsUserGrantValidator>());
 
             var options = new IdentityServerOptions
             {

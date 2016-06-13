@@ -6,10 +6,9 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
     using System.IO;
     using Funq;
     using global::ServiceStack;
-    using global::ServiceStack.Authentication.IdentityServer;
     using global::ServiceStack.Authentication.IdentityServer.Extensions;
     using global::ServiceStack.Razor;
-    using global::ServiceStack.Vault.ClientSecretStore;
+    using ServiceStack.Authentication.IdentityServer.Vault;
 
     class AppHost : AppSelfHostBase
     {
@@ -44,7 +43,6 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
                        .SetScopes("openid profile service1 email offline_access");
 
             Plugins.Add(new IdentityServerVaultAuthFeature());            
-            Plugins.Add(new IdentityServerAuthFeature());
         }
     }
 }

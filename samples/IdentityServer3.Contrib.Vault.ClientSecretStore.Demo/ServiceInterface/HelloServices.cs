@@ -3,9 +3,10 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo.ServiceInterface
 {
-    using global::ServiceStack;
-    using global::ServiceStack.Authentication.IdentityServer.Providers;
     using ServiceModel;
+
+    using ServiceStack;
+    using ServiceStack.Authentication.IdentityServer.Providers;
 
     [Authenticate(IdentityServerAuthProvider.Name)]
     public class HelloServices : Service

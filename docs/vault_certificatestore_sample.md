@@ -15,14 +15,14 @@ When the project starts, you should be presented with a simple ServiceStack web 
 
 #### Starting an instance of vault
 Having downloaded and extracted the Vault.exe, start an unitialised instance of Vault, run the following vault command:
-    vault.exe server -conf=vault.conf
-        
+```bat
+vault.exe server -conf=vault.conf
+```
+
 Where vault.conf contains the following configuration:
-<pre>
-<code>
-    listener "tcp" {
-        address = "127.0.0.1:8200"
-        tls_disable = 1
-    }
-</code>
-</pre>
+```hcl
+listener "tcp" {
+    address = "127.0.0.1:8200"
+    tls_disable = 1
+}
+```

@@ -15,32 +15,30 @@ Vault is assumed to have been setup with the following backends:
 
 #### Quick Start
 To add this to the OWIN startup class of an IdentityServer instance add the following to the Configuration method:
-<pre>
-<code>
-    public void Configuration(IAppBuilder app)
+```csharp
+public void Configuration(IAppBuilder app)
+{
+    var factory = new IdentityServerServiceFactory();
+        
+    ...
+        
+    var options = new IdentityServerOptions
     {
-        var factory = new IdentityServerServiceFactory();
-        
-        ...
-        
-        var options = new IdentityServerOptions
-        {
-            Factory = factory,
-            ...  
-        };
+        Factory = factory,
+        ...  
+    };
 
-		options.AddVaultCertificateStore(new VaultCertificateStoreAppIdOptions
-        {
-			AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",									// AppId using Vault AppId Authentication
-            UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31",								// UserId using Vault UserId Authentication
+	options.AddVaultCertificateStore(new VaultCertificateStoreAppIdOptions
+    {
+	    AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",		// AppId using Vault AppId Authentication
+        UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31",	// UserId using Vault UserId Authentication
 				
-            RoleName = "identity-server",													// Vault Certificate Role Name
-            CommonName = "idsvr.test.com"													// Vault Certificate Common Name
-        });                              
+        RoleName = "identity-server",						// Vault Certificate Role Name
+        CommonName = "idsvr.test.com"						// Vault Certificate Common Name
+    });                              
         
-        ...
+    ...
         
-        app.UseIdentityServer(options);
-    }
-</code>
-</pre>
+    app.UseIdentityServer(options);
+}
+```

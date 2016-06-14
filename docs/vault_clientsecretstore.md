@@ -39,31 +39,29 @@ First add the following package to the Identity Server instance:
 </pre>
 
 Add the following to the OWIN startup class of your IdentityServer instance:
-<pre>
-<code>
-    public void Configuration(IAppBuilder app)
-    { 
-        var factory = new IdentityServerServiceFactory()
-        ...
+```csharp
+public void Configuration(IAppBuilder app)
+{ 
+    var factory = new IdentityServerServiceFactory()
+    ...
         
-        factory.RegisterClientDataStore(new Registration&lt;IClientDataStore&gt;(resolver => 
-            new InMemoryClientDataStore(Clients.Get()))                     // Replace with implementation of IClientDataStore
-        );                                                                  // NOTE!!!: Not IClientStore
-        factory.RegisterScopeDataStore(new Registration&lt;IScopeDataStore&gt;(resolver => 
-            new InMemoryScopeDataStore(Scopes.Get()))                       // Replace with implementation of IScopeDataStore
-        );                                                                  // NOTE!!!: Not IScopeStore
-        factory.AddVaultClientSecretStore(
-                new VaultClientSecretStoreAppIdOptions
-                {
-                    VaultUrl = "http://127.0.0.1:8200",                     // The ip address and port that vault is on
+    factory.RegisterClientDataStore(new Registration<IClientDataStore>(resolver => 
+        new InMemoryClientDataStore(Clients.Get()))                 // Replace with implementation of IClientDataStore
+    );                                                              // NOTE!!!: Not IClientStore
+    factory.RegisterScopeDataStore(new Registration<IScopeDataStore>(resolver => 
+        new InMemoryScopeDataStore(Scopes.Get()))                   // Replace with implementation of IScopeDataStore
+    );                                                              // NOTE!!!: Not IScopeStore
+    factory.AddVaultClientSecretStore(
+        new VaultClientSecretStoreAppIdOptions
+        {
+            VaultUrl = "http://127.0.0.1:8200",                     // The ip address and port that vault is on
                     
-                    AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",         // The IdentityServer AppId for AppId Authentication Backend
-                    UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31"         // The IdentityServer UserId for AppId Authentication Backend
-                });
-        ...
-    }
-</code>
-</pre>
+            AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",         // The IdentityServer AppId for AppId Authentication Backend
+            UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31"         // The IdentityServer UserId for AppId Authentication Backend
+        });
+    ...
+}
+```
 
 ### Service Stack Plugin
 Add the following package to the ServiceStack instance:
@@ -74,34 +72,32 @@ Add the following package to the ServiceStack instance:
 </pre>
 
 Add the following to your AppHost:
-<pre>
-<code>
-    public class AppHost : AppSelfHostBase
+```csharp
+public class AppHost : AppSelfHostBase
+{
+    ...
+        
+    public override void Configure(Container container)
     {
         ...
-        
-        public override void Configure(Container container)
-        {
-            ...
             
-            // The IdentityServer AppId for AppId Authentication Backend
-            AppSettings.Set("vault.app-id", "f8a5a40f-ecd9-43da-a009-82f180e1ef84");
+        // The IdentityServer AppId for AppId Authentication Backend
+        AppSettings.Set("vault.app-id", "f8a5a40f-ecd9-43da-a009-82f180e1ef84");
             
-            // The IdentityServer UserId for AppId Authentication Backend
-            AppSettings.Set("vault.user-id", "27ded1df-7aca-40ba-a825-cc9bf5cb7f88");                                
+        // The IdentityServer UserId for AppId Authentication Backend
+        AppSettings.Set("vault.user-id", "27ded1df-7aca-40ba-a825-cc9bf5cb7f88");                                
             
-            AppSettings.SetUserAuthProvider()                           // Service Stack Identity Server Configuraiton
-                       .SetAuthRealm("http://localhost:5000/")
-                       .SetClientId("clientid ....")
-                       .SetScopes("openid etc ....");
+        AppSettings.SetUserAuthProvider()                  // Service Stack Identity Server Configuraiton
+                   .SetAuthRealm("http://localhost:5000/")
+                   .SetClientId("clientid ....")
+                   .SetScopes("openid etc ....");
 
-            Plugins.Add(new IdentityServerVaultAuthFeature());          // IdentityServer Auth Provider with Vault Secret Store
+        Plugins.Add(new IdentityServerVaultAuthFeature()); // IdentityServer Auth Provider with Vault Secret Store
             
-            ...
-        }
-    }  
-</code>
-</pre>
+        ...
+    }
+}  
+```
 
 Provided all the external configuration is correct that should be enough to use Vault as the Client Secret Store.
 

@@ -4,7 +4,9 @@
 namespace IdentityServer3.Contrib.Vault.Core
 {
     using System;
+    using System.Net;
     using System.Net.Http;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
     using Interfaces;
     using Newtonsoft.Json;
@@ -12,10 +14,26 @@ namespace IdentityServer3.Contrib.Vault.Core
     class VaultHttpClient : IVaultHttpClient
     {
         private readonly HttpClient httpClient;
-
-        public VaultHttpClient(string vaultUri)
+        
+        public VaultHttpClient(string vaultUri, X509Certificate2 cert)
         {
-            httpClient = new HttpClient { BaseAddress = new Uri(vaultUri) };
+            if (vaultUri.StartsWith("https"))
+            {
+                if (cert == null)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(vaultUri), "https requires an X509Certificate");
+                }
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                var handler = new WebRequestHandler();
+                handler.ClientCertificates.Add(cert);
+
+                httpClient = new HttpClient(handler) {BaseAddress = new Uri(vaultUri)};
+            }
+            else
+            {
+                httpClient = new HttpClient { BaseAddress = new Uri(vaultUri) };
+            }
         }
 
         public void AddHeader(string name, string value)

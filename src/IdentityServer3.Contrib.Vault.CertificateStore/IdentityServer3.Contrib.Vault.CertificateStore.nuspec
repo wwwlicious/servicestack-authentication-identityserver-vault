@@ -17,6 +17,7 @@
       <dependency id="IdentityServer3" version="2.5.0" />
       <dependency id="Newtonsoft.Json" version="8.0.3" />
       <dependency id="Owin" version="1.0" />
+      <dependency id="Microsoft.Net.Http" version="2.2.29" />
     </dependencies>
   </metadata>
 </package>

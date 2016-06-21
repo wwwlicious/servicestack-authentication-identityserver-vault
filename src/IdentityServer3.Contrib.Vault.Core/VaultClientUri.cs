@@ -4,15 +4,16 @@
 namespace IdentityServer3.Contrib.Vault.Core
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
     using Helpers;
     using Interfaces;
 
     public class VaultClientUri : IVaultClientUri
     {
-        public VaultClientUri(string vaultUri)
+        public VaultClientUri(string vaultUri, X509Certificate2 cert)
         {
             VaultUri = vaultUri.ThrowIfNullOrEmpty(nameof(vaultUri));
-            ServiceClientFunc = () => new VaultHttpClient(VaultUri);
+            ServiceClientFunc = () => new VaultHttpClient(VaultUri, cert);
         }
 
         public Func<IVaultHttpClient> ServiceClientFunc { get; set; }

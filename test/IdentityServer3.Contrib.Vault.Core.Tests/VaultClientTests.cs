@@ -14,7 +14,7 @@ namespace IdentityServer3.Contrib.Vault.Core.Tests
         [Fact]
         public void Ctor_VaultUriNull_ThrowsException()
         {
-            Action ctor = () => new VaultClient((string)null, null);
+            Action ctor = () => new VaultClient(null, null, null);
 
             ctor.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("vaultUri");
         }
@@ -22,7 +22,7 @@ namespace IdentityServer3.Contrib.Vault.Core.Tests
         [Fact]
         public void Ctor_VaultUriVaultAuthNull_ThrowsException()
         {
-            Action ctor = () => new VaultClient("http://127.0.0.1:8200", null);
+            Action ctor = () => new VaultClient(null, "http://127.0.0.1:8200", null);
 
             ctor.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("vaultAuth");
         }

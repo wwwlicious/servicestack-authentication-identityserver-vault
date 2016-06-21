@@ -40,7 +40,7 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
             VaultClientSecretStoreOptions vaultOptions,
             IVaultAuth vaultAuth)
         {
-            factory.Register(new Registration<IVaultSecretStore>(new VaultSecretStore(new VaultClient(vaultOptions.VaultUrl, vaultAuth))));
+            factory.Register(new Registration<IVaultSecretStore>(new VaultSecretStore(new VaultClient(vaultAuth, vaultOptions.VaultUrl, vaultOptions.VaultCertificate))));
 
             factory.ClientStore = new Registration<IClientStore>(resolver => new ClientSecretStore(resolver.Resolve<IVaultSecretStore>(), resolver.Resolve<IClientDataStore>()));
             factory.ScopeStore = new Registration<IScopeStore>(resolver => new ScopeSecretStore(resolver.Resolve<IVaultSecretStore>(), resolver.Resolve<IScopeDataStore>()));

@@ -12,7 +12,6 @@ namespace IdentityServer3.ServiceStack.Vault.CertificateStore.Demo
     using Contrib.Vault.CertificateStore.Options;
     using Core.Configuration;
     using Core.Models;
-    using Core.Services;
     using Core.Services.InMemory;
     using global::ServiceStack.Text;
     using Microsoft.Owin.Hosting;

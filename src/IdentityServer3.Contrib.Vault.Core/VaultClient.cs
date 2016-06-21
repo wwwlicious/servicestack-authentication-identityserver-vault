@@ -3,14 +3,15 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.Core
 {
+    using System.Security.Cryptography.X509Certificates;
     using Helpers;
     using Interfaces;
 
     public class VaultClient : IVaultClient
     {
-        public VaultClient(string vaultUri, IVaultAuth vaultAuth)
+        public VaultClient(IVaultAuth vaultAuth, string vaultUri, X509Certificate2 cert)
         {        
-            VaultUri = new VaultClientUri(vaultUri);
+            VaultUri = new VaultClientUri(vaultUri, cert);
             VaultAuth = vaultAuth.ThrowIfNull(nameof(vaultAuth));
         }
 

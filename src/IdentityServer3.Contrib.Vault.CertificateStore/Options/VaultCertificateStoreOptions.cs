@@ -3,6 +3,8 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.CertificateStore.Options
 {
+    using System.Security.Cryptography.X509Certificates;
+
     public abstract class VaultCertificateStoreOptions
     {
         protected VaultCertificateStoreOptions()
@@ -11,6 +13,8 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore.Options
         }
 
         public string VaultUrl { get; set; }
+
+        public X509Certificate2 VaultCertificate { get; set; }
 
         public string RoleName { get; set; }
 

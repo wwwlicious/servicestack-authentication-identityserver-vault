@@ -3,16 +3,17 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace ServiceStack.Vault.Core
 {
+    using System.Security.Cryptography.X509Certificates;
     using Interfaces;
 
     public class VaultClient : IVaultClient
     {
-        public VaultClient(string vaultUri, IVaultAuth vaultAuth)
-            : this(new VaultClientUri(vaultUri), vaultAuth)
+        public VaultClient(IVaultAuth vaultAuth, string vaultUri, X509Certificate2 certificate)
+            : this(vaultAuth, new VaultClientUri(vaultUri, certificate))
         {            
         }
 
-        internal VaultClient(IVaultClientUri vaultUri, IVaultAuth vaultAuth)
+        internal VaultClient(IVaultAuth vaultAuth, IVaultClientUri vaultUri)
         {
             vaultUri.ThrowIfNull(nameof(vaultUri));
             vaultAuth.ThrowIfNull(nameof(vaultAuth));

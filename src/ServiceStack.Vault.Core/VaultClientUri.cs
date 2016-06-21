@@ -4,17 +4,32 @@
 namespace ServiceStack.Vault.Core
 {
     using System;
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
     using Interfaces;
 
     public class VaultClientUri : IVaultClientUri
     {
-        public VaultClientUri(string vaultUri)
+        public VaultClientUri(string vaultUri, X509Certificate2 certificate)
         {
             vaultUri.ThrowIfNullOrEmpty(nameof(vaultUri));
 
             VaultUri = vaultUri;
 
-            ServiceClientFunc = () => new JsonServiceClient(VaultUri);
+            ServiceClientFunc = () =>
+            {
+                var client = new JsonServiceClient(VaultUri);
+                if (certificate != null)
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    client.RequestFilter += request =>
+                    {
+                        request.ClientCertificates.Add(certificate);
+                    };
+                }
+
+                return client;
+            };
         }
 
         public Func<IJsonServiceClient> ServiceClientFunc { get; set; } 

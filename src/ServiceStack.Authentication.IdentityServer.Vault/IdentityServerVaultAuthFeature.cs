@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace ServiceStack.Authentication.IdentityServer.Vault
 {
+    using System.Security.Cryptography.X509Certificates;
     using IdentityServer;
     using Interfaces;
     using ServiceStack.Vault.Core;
@@ -16,6 +17,8 @@ namespace ServiceStack.Authentication.IdentityServer.Vault
         public const string VaultEncryptionKeyAppSetting = "vault.encryption.key";
                     
         public const string DefaultVaultUri = "http://127.0.0.1:8200";
+
+        public X509Certificate2 VaultCertificate { get; set; }
 
         public override void Register(IAppHost appHost)
         {
@@ -33,7 +36,7 @@ namespace ServiceStack.Authentication.IdentityServer.Vault
                 appHost.AppSettings.GetString(VaultAppIdAppSetting),
                 appHost.AppSettings.GetString(VaultUserIdAppSetting)
             );
-            var vaultClient = new VaultClient(appHost.AppSettings.GetString(VaultUriAppSetting), vaultAuth);
+            var vaultClient = new VaultClient(vaultAuth, appHost.AppSettings.GetString(VaultUriAppSetting), VaultCertificate);
 
             appHost.Register<IClientSecretStore>(new VaultClientSecretStore(appHost.AppSettings, vaultClient));
 

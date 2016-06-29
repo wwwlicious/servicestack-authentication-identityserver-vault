@@ -7,8 +7,8 @@
     <ProjectGuid>{B6CFE6CF-2C11-48ED-8E7C-2B0CF162A240}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServiceStack.Auth.IdentityServer.Vault.Tests</RootNamespace>
-    <AssemblyName>ServiceStack.Auth.IdentityServer.Vault.Tests</AssemblyName>
+    <RootNamespace>ServiceStack.Authentication.IdentityServer.Vault.Tests</RootNamespace>
+    <AssemblyName>ServiceStack.Authentication.IdentityServer.Vault.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

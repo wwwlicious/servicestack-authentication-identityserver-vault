@@ -74,8 +74,8 @@
       <HintPath>..\..\src\packages\ServiceStack.4.0.56\lib\net40\ServiceStack.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ServiceStack.Authentication.IdentityServer, Version=4.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\src\packages\ServiceStack.Authentication.IdentityServer.4.0.9\lib\net45\ServiceStack.Authentication.IdentityServer.dll</HintPath>
+    <Reference Include="ServiceStack.Authentication.IdentityServer, Version=4.0.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\src\packages\ServiceStack.Authentication.IdentityServer.4.0.14\lib\net45\ServiceStack.Authentication.IdentityServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Client, Version=4.0.56.0, Culture=neutral, processorArchitecture=MSIL">
@@ -96,6 +96,14 @@
     </Reference>
     <Reference Include="ServiceStack.Razor, Version=4.0.56.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\src\packages\ServiceStack.Razor.4.0.56\lib\net45\ServiceStack.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=4.0.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\src\packages\ServiceStack.Redis.4.0.56\lib\net40\ServiceStack.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Server, Version=4.0.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\src\packages\ServiceStack.Server.4.0.56\lib\net45\ServiceStack.Server.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=4.0.56.0, Culture=neutral, processorArchitecture=MSIL">

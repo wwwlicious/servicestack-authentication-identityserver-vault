@@ -14,7 +14,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>ServiceStack IdentityServer Vault</tags>
     <dependencies>
-      <dependency id="ServiceStack.Authentication.IdentityServer" version="4.0.9" />
+      <dependency id="ServiceStack.Authentication.IdentityServer" version="4.0.14" />
     </dependencies>
   </metadata>  
 </package>

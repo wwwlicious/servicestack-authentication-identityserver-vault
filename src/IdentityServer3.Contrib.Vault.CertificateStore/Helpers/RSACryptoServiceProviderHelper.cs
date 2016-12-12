@@ -9,7 +9,7 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore.Helpers
     using Org.BouncyCastle.Asn1.Pkcs;
     using Org.BouncyCastle.Security;
 
-    class RsaCryptoServiceProviderHelper : IRSACryptoServiceProviderHelper
+    public class RsaCryptoServiceProviderHelper : IRSACryptoServiceProviderHelper
     {
         /// <summary>Get the Private Key Provider from the Vault Private Key</summary>
         /// <param name="privateKeyData">Private Key Data</param>

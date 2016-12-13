@@ -9,7 +9,6 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
     using System.Security.Claims;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
-    using ServiceStack;
     using global::ServiceStack.Text;
     using IdentityServer3.Core.Configuration;
     using IdentityServer3.Core.Models;
@@ -26,10 +25,6 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
 
         public static string IdentityServerAppId = "146a3d05-2042-4855-93ba-1b122e70eb6d";
         public static string IdentityServerUserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31";
-
-        public static string ServiceId = "service1";
-        public static string ServiceAppId = "f8a5a40f-ecd9-43da-a009-82f180e1ef84";
-        public static string ServiceUserId = "27ded1df-7aca-40ba-a825-cc9bf5cb7f88";
 
         static void Main(string[] args)
         {
@@ -49,7 +44,7 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
             Console.WriteLine("Mount transit backend to create vault encryption keys");
             VaultUrl.MountTransit(rootToken);
             Console.WriteLine("Create encryption token for encrypting/decrypting secrets");
-            VaultUrl.CreateEncryptionKey(rootToken, ServiceId);
+            VaultUrl.CreateEncryptionKey(rootToken, AppHost.ServiceId);
 
             // 3.a Create PKI end-point for certificatey "stuff"
             VaultUrl.MountPki(rootToken);
@@ -60,7 +55,7 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
             VaultUrl.GenerateCertificateRole(rootToken, "identity-server", "test.com");
 
             // 4. Create list of client secrets for the micro-service
-            VaultUrl.CreateSecrets(rootToken, ServiceId, new[] { "secret1", "secret2", "secret3", "secret4", "secret5" });
+            VaultUrl.CreateSecrets(rootToken, AppHost.ServiceId, new[] { "secret1", "secret2", "secret3", "secret4", "secret5" });
 
             // 5. Create app-id and user-id for the client that only have access to the secret end point
             VaultUrl.EnableAppId(rootToken);
@@ -71,9 +66,9 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
             VaultUrl.MapUserIdsToAppIds(rootToken, IdentityServerUserId, IdentityServerAppId);
 
             // Create Service app-id/user-id credentials
-            VaultUrl.CreateAppId(rootToken, ServiceAppId, "root");
-            VaultUrl.CreateUserId(rootToken, ServiceUserId);
-            VaultUrl.MapUserIdsToAppIds(rootToken, ServiceUserId, ServiceAppId);
+            VaultUrl.CreateAppId(rootToken, AppHost.ServiceAppId, "root");
+            VaultUrl.CreateUserId(rootToken, AppHost.ServiceUserId);
+            VaultUrl.MapUserIdsToAppIds(rootToken, AppHost.ServiceUserId, AppHost.ServiceAppId);
 
             IDisposable webApp = null;
 
@@ -83,7 +78,7 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
                 webApp = WebApp.Start<Startup>("http://localhost:5000");
 
                 // Now start up service stack client
-                new AppHost("http://localhost:5001/", ServiceAppId, ServiceUserId, ServiceId).Init().Start("http://*:5001/");
+                new AppHost("http://localhost:5001/").Init().Start("http://*:5001/");
                 "ServiceStack Self Host with Razor listening at http://localhost:5001 ".Print();
                 Process.Start("http://localhost:5001/");
                 

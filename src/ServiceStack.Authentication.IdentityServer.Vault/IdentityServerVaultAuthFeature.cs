@@ -4,43 +4,59 @@
 namespace ServiceStack.Authentication.IdentityServer.Vault
 {
     using System.Security.Cryptography.X509Certificates;
-    using IdentityServer;
+    using Configuration;
+    using IdentityServer.Interfaces;
     using Interfaces;
     using ServiceStack.Vault.Core;
     using ServiceStack.Vault.Core.VaultAuth;
 
-    public class IdentityServerVaultAuthFeature : IdentityServerAuthFeature
+    public class IdentityServerVaultAuthFeature : IPlugin, IIdentityServerVaultAuthSettings
     {
-        public const string VaultUriAppSetting = "vault.uri";
-        public const string VaultAppIdAppSetting = "vault.app-id";
-        public const string VaultUserIdAppSetting = "vault.user-id";
-        public const string VaultEncryptionKeyAppSetting = "vault.encryption.key";
-                    
+        protected readonly IAppSettings AppSettings;
+
         public const string DefaultVaultUri = "http://127.0.0.1:8200";
 
         public X509Certificate2 VaultCertificate { get; set; }
 
-        public override void Register(IAppHost appHost)
+        public string VaultUri
         {
-            if (string.IsNullOrEmpty(appHost.AppSettings.GetString(VaultUriAppSetting)))
-            {
-                appHost.AppSettings.Set(VaultUriAppSetting, DefaultVaultUri);
-            }
+            get { return AppSettings.Get(ConfigKeys.VaultUri, DefaultVaultUri); }
+            set { AppSettings.Set(ConfigKeys.VaultUri, value); }
+        }
 
-            appHost.AppSettings.GetString(VaultAppIdAppSetting).ThrowIfNullOrEmpty("IAppSettings - vault.app-id not set");
-            appHost.AppSettings.GetString(VaultUserIdAppSetting).ThrowIfNullOrEmpty("IAppSettings - vault.user-id not set");            
+        public string VaultAppId
+        {
+            get { return AppSettings.Get(ConfigKeys.VaultAppId, string.Empty); }
+            set { AppSettings.Set(ConfigKeys.VaultAppId, value); }
+        }
 
-            appHost.AppSettings.Set(VaultEncryptionKeyAppSetting, HostContext.ServiceName);
+        public string VaultUserId
+        {
+            get { return AppSettings.Get(ConfigKeys.VaultUserId, string.Empty); }
+            set { AppSettings.Set(ConfigKeys.VaultUserId, value); }
+        }
 
-            var vaultAuth = new VaultAppIdAuth(
-                appHost.AppSettings.GetString(VaultAppIdAppSetting),
-                appHost.AppSettings.GetString(VaultUserIdAppSetting)
-            );
-            var vaultClient = new VaultClient(vaultAuth, appHost.AppSettings.GetString(VaultUriAppSetting), VaultCertificate);
+        public string VaultEncryptionKey
+        {
+            get { return AppSettings.Get(ConfigKeys.VaultEncryptionKey, HostContext.ServiceName); }
+            set { AppSettings.Set(ConfigKeys.VaultEncryptionKey, value); }
+        }
 
-            appHost.Register<IClientSecretStore>(new VaultClientSecretStore(appHost.AppSettings, vaultClient));
+        public IdentityServerVaultAuthFeature(IAppSettings appSettings = null)
+        {
+            this.AppSettings = appSettings ?? ServiceStackHost.Instance.AppSettings;
+        }
 
-            base.Register(appHost);
+        public void Register(IAppHost appHost)
+        {
+            VaultUri.ThrowIfNullOrEmpty(nameof(VaultUri));
+            VaultAppId.ThrowIfNullOrEmpty("IAppSettings - vault.app-id not set");
+            VaultUserId.ThrowIfNullOrEmpty("IAppSettings - vault.user-id not set");      
+
+            var vaultAuth = new VaultAppIdAuth(VaultAppId, VaultUserId);
+            var vaultClient = new VaultClient(vaultAuth, VaultUri, VaultCertificate);
+
+            appHost.Register<IClientSecretStore>(new VaultClientSecretStore(this, vaultClient));
         }
     }
 }

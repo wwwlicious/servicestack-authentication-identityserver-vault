@@ -80,19 +80,18 @@ public class AppHost : AppSelfHostBase
     public override void Configure(Container container)
     {
         ...
-            
-        // The IdentityServer AppId for AppId Authentication Backend
-        AppSettings.Set("vault.app-id", "f8a5a40f-ecd9-43da-a009-82f180e1ef84");
-            
-        // The IdentityServer UserId for AppId Authentication Backend
-        AppSettings.Set("vault.user-id", "27ded1df-7aca-40ba-a825-cc9bf5cb7f88");                                
-            
+                                                            
         AppSettings.SetUserAuthProvider()                  // Service Stack Identity Server Configuraiton
                    .SetAuthRealm("http://localhost:5000/")
                    .SetClientId("clientid ....")
                    .SetScopes("openid etc ....");
 
-        Plugins.Add(new IdentityServerVaultAuthFeature()); // IdentityServer Auth Provider with Vault Secret Store
+        Plugins.Add(new IdentityServerAuthFeature());      
+        Plugins.Add(new IdentityServerVaultAuthFeature              // IdentityServer Vault Secret Store 
+        {
+            VaultAppId = "f8a5a40f-ecd9-43da-a009-82f180e1ef84",    // The IdentityServer AppId for AppId Authentication Backend
+            VaultUserId = "27ded1df-7aca-40ba-a825-cc9bf5cb7f88"    // The IdentityServer UserId for AppId Authentication Backend
+        }); 
             
         ...
     }

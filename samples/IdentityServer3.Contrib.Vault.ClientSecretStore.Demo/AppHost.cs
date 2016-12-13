@@ -8,20 +8,21 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
     using global::ServiceStack;
     using global::ServiceStack.Authentication.IdentityServer.Extensions;
     using global::ServiceStack.Razor;
+    using ServiceStack.Authentication.IdentityServer;
     using ServiceStack.Authentication.IdentityServer.Vault;
 
     class AppHost : AppSelfHostBase
     {
-        private readonly string serviceUrl;
+        public static string ServiceId = "service1";
+        public static string ServiceAppId = "f8a5a40f-ecd9-43da-a009-82f180e1ef84";
+        public static string ServiceUserId = "27ded1df-7aca-40ba-a825-cc9bf5cb7f88";
 
-        public AppHost(string serviceUrl, string appId, string userId, string encryptionKey)
-            : base(Program.ServiceId, typeof (AppHost).Assembly)
+        private readonly string serviceUrl;        
+
+        public AppHost(string serviceUrl)
+            : base(ServiceId, typeof (AppHost).Assembly)
         {
             this.serviceUrl = serviceUrl;
-
-            AppSettings.Set(IdentityServerVaultAuthFeature.VaultAppIdAppSetting, appId);
-            AppSettings.Set(IdentityServerVaultAuthFeature.VaultUserIdAppSetting, userId);
-            AppSettings.Set(IdentityServerVaultAuthFeature.VaultEncryptionKeyAppSetting, encryptionKey);
         }
 
         public override void Configure(Container container)
@@ -36,13 +37,21 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore.Demo
                 WebHostUrl = serviceUrl
             });
 
-
             AppSettings.SetUserAuthProvider()
                        .SetAuthRealm("http://localhost:5000/")
-                       .SetClientId(Program.ServiceId)
+                       .SetClientId(ServiceId)
                        .SetScopes("openid profile service1 email offline_access");
 
-            Plugins.Add(new IdentityServerVaultAuthFeature());            
+            Plugins.Add(new IdentityServerAuthFeature
+            {
+                
+            });
+            Plugins.Add(new IdentityServerVaultAuthFeature
+            {
+                VaultAppId = ServiceAppId,
+                VaultUserId = ServiceUserId,
+                VaultEncryptionKey = ServiceId
+            });            
         }
     }
 }

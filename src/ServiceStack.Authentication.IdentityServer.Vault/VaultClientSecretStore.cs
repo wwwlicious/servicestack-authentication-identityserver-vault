@@ -7,7 +7,7 @@ namespace ServiceStack.Authentication.IdentityServer.Vault
     using System.Threading.Tasks;
     using Interfaces;
     using DTO;
-    using Configuration;
+    using IdentityServer.Interfaces;
     using Logging;
     using ServiceStack.Vault.Core.Interfaces;
 
@@ -16,15 +16,15 @@ namespace ServiceStack.Authentication.IdentityServer.Vault
         private static readonly Random Random = new Random((int)DateTime.Now.Ticks);
         private static readonly ILog Log = LogManager.GetLogger(typeof(VaultClientSecretStore));
 
-        private readonly IAppSettings appSettings;
+        private readonly IIdentityServerVaultAuthSettings settings;
         private readonly IVaultClient vaultClient;
         
-        public VaultClientSecretStore(IAppSettings appSettings, IVaultClient vaultClient)
+        public VaultClientSecretStore(IIdentityServerVaultAuthSettings settings, IVaultClient vaultClient)
         {
-            appSettings.ThrowIfNull(nameof(appSettings));
+            settings.ThrowIfNull(nameof(settings));
             vaultClient.ThrowIfNull(nameof(vaultClient));
 
-            this.appSettings = appSettings;
+            this.settings = settings;
             this.vaultClient = vaultClient;
         }
 
@@ -63,7 +63,7 @@ namespace ServiceStack.Authentication.IdentityServer.Vault
                 {
                     var response = await client.PutAsync(new Encrypt
                     {
-                        Key = appSettings.GetString(IdentityServerVaultAuthFeature.VaultEncryptionKeyAppSetting),
+                        Key = settings.VaultEncryptionKey,
                         Value = Base64Encode(secret)
                     }).ConfigureAwait(false);
                     return response?.Data?.CipherText;

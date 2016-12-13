@@ -5,9 +5,9 @@ namespace ServiceStack.Authentication.IdentityServer.Vault.Tests
 {
     using System;
     using Vault;
-    using Configuration;
     using FakeItEasy;
     using FluentAssertions;
+    using Interfaces;
     using Xunit;
 
     public class VaultClientSecretStoreTests
@@ -17,13 +17,13 @@ namespace ServiceStack.Authentication.IdentityServer.Vault.Tests
         {
             Action ctor = () => new VaultClientSecretStore(null, null);
 
-            ctor.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("appSettings");
+            ctor.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("settings");
         }
 
         [Fact]
         public void Ctor_VaultClientNull_ThrowsException()
         {
-            var appSettingsFake = A.Fake<IAppSettings>();
+            var appSettingsFake = A.Fake<IIdentityServerVaultAuthSettings>();
 
             Action ctor = () => new VaultClientSecretStore(appSettingsFake, null);
 

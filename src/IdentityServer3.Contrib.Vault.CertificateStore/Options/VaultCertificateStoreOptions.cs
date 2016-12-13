@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.CertificateStore.Options
 {
+    using System.IO;
     using System.Security.Cryptography.X509Certificates;
 
     public abstract class VaultCertificateStoreOptions
@@ -10,6 +11,7 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore.Options
         protected VaultCertificateStoreOptions()
         {
             VaultUrl = "http://127.0.0.1:8200";
+            CertificateTempPath = Path.GetTempPath();
         }
 
         public string VaultUrl { get; set; }
@@ -19,5 +21,7 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore.Options
         public string RoleName { get; set; }
 
         public string CommonName { get; set; }
+
+        public string CertificateTempPath { get; set; }
     }
 }

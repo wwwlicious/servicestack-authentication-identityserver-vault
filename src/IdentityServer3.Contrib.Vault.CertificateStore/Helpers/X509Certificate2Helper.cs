@@ -6,20 +6,29 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore.Helpers
     using System;
     using System.IO;
     using System.Security.Cryptography.X509Certificates;
+    using Core.Helpers;
     using IdentityServer3.Core.Logging;
     using Interfaces;
+    using Options;
     using Org.BouncyCastle.Security;
 
     public class X509Certificate2Helper : IX509Certificate2Helper
     {
         private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
+        private readonly VaultCertificateStoreOptions options;
+
+        public X509Certificate2Helper(VaultCertificateStoreOptions options)
+        {
+            this.options = options.ThrowIfNull(nameof(options));
+        }
+
         /// <summary>Writes the Certificate to a temporary file then creates the Certificate from there</summary>
         /// <param name="certificateData">Vault Certificate Data</param>
         /// <returns>X509 Certificate 2</returns>
         public X509Certificate2 GetCertificate(byte[] certificateData)
         {
-            var file = Path.Combine(Path.GetTempPath(), "Idsvr" + Guid.NewGuid());
+            var file = Path.Combine(options.CertificateTempPath, "Idsvr" + Guid.NewGuid());
             X509Certificate2 certificate;
             try
             {

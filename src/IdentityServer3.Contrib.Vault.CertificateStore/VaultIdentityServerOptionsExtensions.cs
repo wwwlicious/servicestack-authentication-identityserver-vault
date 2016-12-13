@@ -24,7 +24,7 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore
             // This isn't great but we need a cert at startup
             var client = new VaultClient(vaultAuth, vaultOptions.VaultUrl, vaultOptions.VaultCertificate);
             var certificateStore = new VaultCertificateStore(client, vaultOptions.RoleName, vaultOptions.CommonName);
-            var certificateHelper = new X509Certificate2Helper();
+            var certificateHelper = new X509Certificate2Helper(vaultOptions);
             var privateKeyHelper = new RsaCryptoServiceProviderHelper();
             var vaultService = new VaultCertificateService(options, certificateStore, certificateHelper, privateKeyHelper);
             vaultService.GetCertificates();

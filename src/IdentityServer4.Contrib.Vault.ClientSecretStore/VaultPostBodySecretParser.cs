@@ -1,55 +1,56 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-namespace IdentityServer3.Contrib.Vault.ClientSecretStore
+namespace IdentityServer4.Contrib.Vault.ClientSecretStore
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Helpers;
-    using IdentityServer3.Core.Logging;
-    using IdentityServer3.Core.Models;
-    using IdentityServer3.Core.Services;
+    using Core.Helpers;
+    using IdentityModel;
     using Interfaces;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using Models;
+    using Validation;
 
     /// <summary>
     /// Post Body Secret Parser
     /// </summary>
     public class VaultPostBodySecretParser : ISecretParser
     {
-        private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
-
         private readonly IVaultSecretStore secretStore;
-        private readonly IRequestParser parser;
+        private readonly ILogger<VaultPostBodySecretParser> logger;
 
         /// <summary>Constructor</summary>
-        /// <param name="secretStore">Vault Secret Store</param>
-        /// <param name="parser">Owin Context Form Collection Parser</param>
-        public VaultPostBodySecretParser(IVaultSecretStore secretStore, IRequestParser parser)
+        /// <param name="secretStore">Vault Secret Store</param>        
+        /// <param name="logger"></param>
+        public VaultPostBodySecretParser(IVaultSecretStore secretStore, ILogger<VaultPostBodySecretParser> logger)
         {
             this.secretStore = secretStore.ThrowIfNull(nameof(secretStore));
-            this.parser = parser.ThrowIfNull(nameof(parser));
+            this.logger = logger.ThrowIfNull(nameof(logger));
         }
 
-        /// <summary>Parse Secret from form post</summary>
-        /// <param name="environment"></param>
-        /// <returns></returns>
-        public async Task<ParsedSecret> ParseAsync(IDictionary<string, object> environment)
-        {
-            Logger.Debug("Start parsing for secret in post body");
+        public string AuthenticationMethod => OidcConstants.EndpointAuthenticationMethods.PostBody;
 
-            var body = await parser.ReadRequestFormAsync(environment).ConfigureAwait(false);
+        /// <summary>Parse Secret from form post</summary>
+        /// <param name="context">HTTP Context</param>
+        /// <returns></returns>
+        public async Task<ParsedSecret> ParseAsync(HttpContext context)
+        {
+            logger.LogDebug("Start parsing for secret in post body");
+
+            var body = context.Request.Form;
             if (body == null)
             {
                 return null;
             }
 
-            var id = body.Get("client_id");
+            var id = body["client_id"];
             if (string.IsNullOrWhiteSpace(id))
             {
                 return null;
             }
 
-            var secret = body.Get("client_secret");
+            var secret = body["client_secret"];
             if (string.IsNullOrWhiteSpace(secret))
             {
                 return null;

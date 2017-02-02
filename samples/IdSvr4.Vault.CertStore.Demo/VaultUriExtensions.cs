@@ -1,9 +1,7 @@
-﻿namespace IdSvr4.Vault.SecretStore.Demo
+﻿namespace IdSvr4.Vault.CertStore.Demo
 {
     using System;
-
     using System.Net.Http;
-    using System.Text;
     using ServiceStack;
     using ServiceStack.Text;
 
@@ -117,18 +115,6 @@
             }
         }
 
-        public static void CreateSecrets(this string vaultUri, string rootToken, string secretName, string[] secrets)
-        {
-            using (var client = new JsonServiceClient(vaultUri))
-            {
-                client.AddHeader("X-Vault-Token", rootToken);
-                client.Post<JsonObject>($"v1/secret/{secretName}", new
-                {
-                    value = Encoding.UTF8.GetBytes(secrets.ToJson())
-                });
-            }
-        }
-
         [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
         public static void EnableAppId(this string vaultUri, string rootToken)
         {
@@ -139,16 +125,16 @@
             }
         }
 
-        public static void CreatePolicy(this string vaultUri, string rootToken, string name, string path, string policy)
+        public static void CreatePolicy(this string vaultUri, string rootToken, string name, string path, string[] capabilities)
         {
             using (var client = new JsonServiceClient(vaultUri))
             {
                 client.AddHeader("X-Vault-Token", rootToken);
-                client.Put<string>($"v1/sys/policy/{name}", new { rules = CreateRule(path, policy).ToJson() });
+                client.Put<string>($"v1/sys/policy/{name}", new { rules = CreateRule(path, capabilities).ToJson() });
             }
         }
 
-        private static JsonObject CreateRule(string path, string policy)
+        private static JsonObject CreateRule(string path, string[] capabilities)
         {
             return new JsonObject
             {
@@ -156,7 +142,7 @@
                 {
                     [path] = new JsonObject
                     {
-                        ["policy"] = policy
+                        ["capabilities"] = capabilities.ToJson()
                     }.ToJson()
                 }.ToJson()
             };
@@ -216,12 +202,26 @@
 
         public static string GetAppRoleId(this string vaultUri, string rootToken, string appRole)
         {
-            return null;
+            using (var client = new JsonServiceClient(vaultUri))
+            {
+                client.AddHeader("X-Vault-Token", rootToken);
+                var response = client.Get<JsonObject>($"v1/auth/approle/role/{appRole}/role-id");
+                var data = response.Get<JsonObject>("data");
+                return data["role_id"];
+            }
         }
 
         public static string GetAppRoleSecretId(this string vaultUri, string rootToken, string appRole)
         {
-            return null;
+            using (var client = new JsonServiceClient(vaultUri))
+            {
+                client.AddHeader("X-Vault-Token", rootToken);
+
+                var secretUrl = $"v1/auth/approle/role/{appRole}/secret-id";
+                var response = client.Post<JsonObject>(secretUrl, null);
+                var data = response.Get<JsonObject>("data");
+                return data["secret_id"];
+            }
         }
     }
 }

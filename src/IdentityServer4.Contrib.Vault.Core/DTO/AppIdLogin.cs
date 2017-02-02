@@ -3,15 +3,17 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer4.Contrib.Vault.Core.DTO
 {
-    using System.Collections.Generic;
+    using System;
     using Newtonsoft.Json;
 
+    [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
     public class AppIdLogin
     {
         [JsonProperty("user_id")]
         public string UserId { get; set; }
     }
 
+    [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
     public class AppIdLoginResult
     {
         [JsonProperty("lease_id")]
@@ -25,26 +27,8 @@ namespace IdentityServer4.Contrib.Vault.Core.DTO
 
         [JsonProperty("auth")]
         public Auth Auth { get; set; }
-    }
 
-    public class Auth
-    {
-        [JsonProperty("client_token")]
-        public string ClientToken { get; set; }
-
-        [JsonProperty("accessor")]
-        public string Accessor { get; set; }
-
-        [JsonProperty("policies")]
-        public string[] Policies { get; set; }
-
-        [JsonProperty("metadata")]
-        public IDictionary<string, string> Metadata { get; set; }
-
-        [JsonProperty("lease_duration")]
-        public int LeaseDuration { get; set; }
-
-        [JsonProperty("renewable")]
-        public bool Renewable { get; set; }
+        [JsonProperty("errors")]
+        public string[] Errors { get; set; }
     }
 }

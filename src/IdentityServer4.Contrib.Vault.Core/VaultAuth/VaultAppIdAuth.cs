@@ -9,6 +9,7 @@ namespace IdentityServer4.Contrib.Vault.Core.VaultAuth
     using Interfaces;
     using Microsoft.Extensions.Logging;
 
+    [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
     public class VaultAppIdAuth : IVaultAuth
     {
         private readonly string appId;
@@ -36,6 +37,13 @@ namespace IdentityServer4.Contrib.Vault.Core.VaultAuth
                     if (result?.Auth != null)
                     {
                         AuthToken = result.Auth.ClientToken;
+                    }
+                    else
+                    {
+                        if (result?.Errors != null)
+                        {
+                            logger.LogError("Unable to authenticate client using AppId - Errors: {0}", result.Errors);
+                        }
                     }
                 }
             }

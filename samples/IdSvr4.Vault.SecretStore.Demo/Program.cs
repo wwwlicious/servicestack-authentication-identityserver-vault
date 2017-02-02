@@ -54,18 +54,22 @@
             // 4. Create list of client secrets for the micro-service
             VaultUrl.CreateSecrets(rootToken, ServiceId, new[] { "secret1", "secret2", "secret3", "secret4", "secret5" });
 
-            // 5. Create app-id and user-id for the client that only have access to the secret end point
-            VaultUrl.EnableAppId(rootToken);
+            // 5. Create AppRole for the client
 
-            // Create Identity Server app-id/user-id credentials
-            VaultUrl.CreateAppId(rootToken, IdentityServerAppId, "root");
-            VaultUrl.CreateUserId(rootToken, IdentityServerUserId);
-            VaultUrl.MapUserIdsToAppIds(rootToken, IdentityServerUserId, IdentityServerAppId);
+            // 6. Create AppRole 
 
-            // Create Service app-id/user-id credentials
-            VaultUrl.CreateAppId(rootToken, ServiceAppId, "root");
-            VaultUrl.CreateUserId(rootToken, ServiceUserId);
-            VaultUrl.MapUserIdsToAppIds(rootToken, ServiceUserId, ServiceAppId);
+            //// 5. Create app-id and user-id for the client that only have access to the secret end point
+            //VaultUrl.EnableAppId(rootToken);
+
+            //// Create Identity Server app-id/user-id credentials
+            //VaultUrl.CreateAppId(rootToken, IdentityServerAppId, "root");
+            //VaultUrl.CreateUserId(rootToken, IdentityServerUserId);
+            //VaultUrl.MapUserIdsToAppIds(rootToken, IdentityServerUserId, IdentityServerAppId);
+
+            //// Create Service app-id/user-id credentials
+            //VaultUrl.CreateAppId(rootToken, ServiceAppId, "root");
+            //VaultUrl.CreateUserId(rootToken, ServiceUserId);
+            //VaultUrl.MapUserIdsToAppIds(rootToken, ServiceUserId, ServiceAppId);
 
 
             var host = new WebHostBuilder()

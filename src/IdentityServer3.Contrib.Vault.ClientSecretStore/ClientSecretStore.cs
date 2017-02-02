@@ -38,20 +38,22 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
 
             if (client == null) return null;
 
-            client.ClientSecrets = new List<Secret>();
+            var clientSecrets = new List<Secret>(client.ClientSecrets);
             
             var secrets = secretStore.GetSecrets(clientId).Result;
             if (secrets != null && secrets.Length > 0)
             {
                 foreach (var secret in secrets)
                 {
-                    client.ClientSecrets.Add(new Secret(secret)
+                    clientSecrets.Add(new Secret(secret)
                     {
                         Type = Constants.VaultSharedSecretType
                     });
                 }
             }
-            
+
+            client.ClientSecrets = clientSecrets;
+
             return client;
         }
     }

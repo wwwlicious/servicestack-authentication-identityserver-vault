@@ -15,7 +15,7 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
     using Stores;
     using Validation;
 
-    public static class VaultIdentityServerServiceFactoryExtensions
+    public static class IdentityServerBuilderExtensions
     {
         public static IIdentityServerBuilder AddClientDataStore(this IIdentityServerBuilder builder, Func<IServiceProvider, IClientDataStore> clientDataStore)
         {
@@ -29,12 +29,27 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
             return builder;
         }
 
-        public static void AddVaultClientSecretStore(
+        [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
+        public static IIdentityServerBuilder AddVaultAppIdClientSecretStore(
             this IIdentityServerBuilder builder,
             VaultClientSecretStoreAppIdOptions vaultOptions)
         {
             builder.Services.AddSingleton<IVaultAuth>(resolver => new VaultAppIdAuth(vaultOptions.AppId, vaultOptions.UserId, resolver.GetService<ILogger<VaultAppIdAuth>>()));
+            return builder.AddVaultClientSecretStore(vaultOptions);
+        }
 
+        public static IIdentityServerBuilder AddVaultAppRoleClientSecretStore(
+            this IIdentityServerBuilder builder,
+            VaultClientSecretStoreAppRoleOptions vaultOptions)
+        {
+            builder.Services.AddSingleton<IVaultAuth>(resolver => new VaultAppRoleAuth(vaultOptions.RoleId, vaultOptions.SecretId, resolver.GetService<ILogger<VaultAppRoleAuth>>()));
+            return builder.AddVaultClientSecretStore(vaultOptions);
+        }
+
+        public static IIdentityServerBuilder AddVaultClientSecretStore(
+            this IIdentityServerBuilder builder,
+            VaultClientSecretStoreOptions vaultOptions)
+        {
             builder.Services.AddSingleton<IVaultSecretStore>(resolver => new VaultSecretStore(new VaultClient(resolver.GetService<IVaultAuth>(), vaultOptions.VaultUrl, vaultOptions.VaultCertificate), resolver.GetService<ILogger<VaultSecretStore>>()));
 
             builder.Services.AddTransient<IClientStore>(resolver => new ClientSecretStore(resolver.GetService<IVaultSecretStore>(), resolver.GetService<IClientDataStore>()));
@@ -56,6 +71,8 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
             builder.AddSecretParser<VaultBasicAuthenticationSecretParser>();
 
             builder.Services.AddTransient<ISecretValidator, VaultSecretValidator>();
+
+            return builder;
         }
 
         private static bool IsSecretParser<T>(ServiceDescriptor descriptor)

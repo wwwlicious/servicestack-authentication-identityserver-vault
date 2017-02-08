@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\AppIdLogin.cs" />
+    <Compile Include="DTO\AppRoleLogin.cs" />
     <Compile Include="DTO\UserPassLogin.cs" />
     <Compile Include="Helpers\PreConditions.cs" />
     <Compile Include="Interfaces\IVaultAuth.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Interfaces\IVaultHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VaultAuth\VaultAppIdAuth.cs" />
+    <Compile Include="VaultAuth\VaultAppRoleAuth.cs" />
     <Compile Include="VaultAuth\VaultTokenAuth.cs" />
     <Compile Include="VaultAuth\VaultUserPassAuth.cs" />
     <Compile Include="VaultClient.cs" />

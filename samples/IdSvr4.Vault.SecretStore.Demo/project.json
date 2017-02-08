@@ -11,14 +11,10 @@
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.AspNetCore.StaticFiles": "1.1.0",
-    "Serilog": "2.3.0",
-    "Serilog.Sinks.Literate": "2.0.0",
-    "Serilog.Extensions.Logging": "1.3.1",
     "IdentityServer4.Contrib.Vault.ClientSecretStore": {
       "target": "project"
     },
     "ServiceStack.HttpClient.Core": "1.0.33",
-    "Serilog.Sinks.Seq": "3.2.0",
     "Microsoft.Extensions.Configuration": "1.1.0",
     "Microsoft.Extensions.Configuration.Json": "1.1.0"
   },

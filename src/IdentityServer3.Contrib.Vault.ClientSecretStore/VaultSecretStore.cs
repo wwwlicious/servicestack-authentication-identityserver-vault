@@ -4,6 +4,7 @@
 namespace IdentityServer3.Contrib.Vault.ClientSecretStore
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Core.Interfaces;
     using DTO;
@@ -56,7 +57,7 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
                 {
                     var response = await client.GetAsync<SecretsResponse>($"v1/secret/{secretName}")
                                                .ConfigureAwait(false);
-                    return response.GetSecrets();
+                    return response.Data.Select(x => x.Value).ToArray();
                 }
             }
             catch (Exception exception)

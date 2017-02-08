@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\IVaultCertificateStore.cs" />
     <Compile Include="Interfaces\IX509Certificate2Helper.cs" />
     <Compile Include="Options\VaultCertificateStoreAppIdOptions.cs" />
+    <Compile Include="Options\VaultCertificateStoreAppRoleOptions.cs" />
     <Compile Include="Options\VaultCertificateStoreOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VaultCertificate.cs" />

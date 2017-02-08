@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.ClientSecretStore
 {
+    using System;
     using Core;
     using Helpers;
     using Core.Interfaces;
@@ -24,11 +25,20 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
             factory.Register(registration);
         }
 
+        [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
         public static void AddVaultClientSecretStore(
             this IdentityServerServiceFactory factory,
             VaultClientSecretStoreAppIdOptions vaultOptions)
         {
             factory.AddVaultClientSecretStore(vaultOptions, new VaultAppIdAuth(vaultOptions.AppId, vaultOptions.UserId));
+        }
+
+        public static void AddVaultClientSecretStore(
+            this IdentityServerServiceFactory factory,
+            VaultClientSecretStoreAppRoleOptions vaultOptions
+        )
+        {
+            factory.AddVaultClientSecretStore(vaultOptions, new VaultAppRoleAuth(vaultOptions.RoleId, vaultOptions.SecretId));
         }
 
         /// <summary>Setup Vault to store Client Secrets</summary>

@@ -9,6 +9,7 @@ namespace IdentityServer3.Contrib.Vault.Core.VaultAuth
     using IdentityServer3.Core.Logging;
     using Interfaces;
 
+    [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
     public class VaultAppIdAuth : IVaultAuth
     {
         private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();

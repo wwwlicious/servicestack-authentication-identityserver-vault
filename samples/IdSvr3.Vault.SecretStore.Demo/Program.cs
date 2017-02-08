@@ -5,7 +5,6 @@
     using System.Configuration;
     using System.Security.Claims;
     using System.Security.Cryptography.X509Certificates;
-    using System.Threading;
     using IdentityServer3.Contrib.Vault.ClientSecretStore;
     using IdentityServer3.Contrib.Vault.ClientSecretStore.Interfaces;
     using IdentityServer3.Contrib.Vault.ClientSecretStore.Options;
@@ -44,18 +43,16 @@
         {
             var factory = new IdentityServerServiceFactory().UseInMemoryUsers(Users.Get());
 
-            ;
-
             factory.UserService = new Registration<IUserService, UserService>();
 
             factory.RegisterClientDataStore(new Registration<IClientDataStore>(resolver => new InMemoryClientDataStore(Clients.Get())));
             factory.RegisterScopeDataStore(new Registration<IScopeDataStore>(resolver => new InMemoryScopeDataStore(Scopes.Get())));
-            factory.AddVaultClientSecretStore(
-                new VaultClientSecretStoreAppIdOptions
-                {
-                    AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",
-                    UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31"
-                });
+
+            factory.AddVaultClientSecretStore(new VaultClientSecretStoreAppRoleOptions
+            {
+                RoleId = ConfigurationManager.AppSettings["AppRoleId"],
+                SecretId = ConfigurationManager.AppSettings["AppSecretId"]
+            });
 
             var options = new IdentityServerOptions
             {
@@ -105,7 +102,7 @@
                 new Client
                 {
                     ClientName = "ServiceStack.Vault.ClientSecrets.Demo",
-                    ClientId = "service1",
+                    ClientId = ConfigurationManager.AppSettings["ServiceName"],
                     Enabled = true,
 
                     AccessTokenType = AccessTokenType.Jwt,
@@ -135,7 +132,7 @@
                 new Scope
                 {
                     Enabled = true,
-                    Name = "service1",
+                    Name = ConfigurationManager.AppSettings["ServiceName"],
                     Type = ScopeType.Identity,
                     Claims = new List<ScopeClaim>
                     {

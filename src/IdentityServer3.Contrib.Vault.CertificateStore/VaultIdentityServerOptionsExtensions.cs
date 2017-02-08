@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace IdentityServer3.Contrib.Vault.CertificateStore
 {
+    using System;
     using Core;
     using Core.Interfaces;
     using Core.VaultAuth;
@@ -14,9 +15,15 @@ namespace IdentityServer3.Contrib.Vault.CertificateStore
 
     public static class VaultIdentityServerOptionsExtensions
     {
+        [Obsolete("AppId Auth Backend has been deprecated from Vault as of Version version 0.6.1")]
         public static void AddVaultCertificateStore(this IdentityServerOptions options, VaultCertificateStoreAppIdOptions vaultOptions)
         {
             options.AddVaultCertificateStore(vaultOptions, new VaultAppIdAuth(vaultOptions.AppId, vaultOptions.UserId));
+        }
+
+        public static void AddVaultAppRoleCertificateStore(this IdentityServerOptions options, VaultCertificateStoreAppRoleOptions vaultOptions)
+        {
+            options.AddVaultCertificateStore(vaultOptions, new VaultAppRoleAuth(vaultOptions.RoleId, vaultOptions.SecretId));
         }
 
         private static void AddVaultCertificateStore(this IdentityServerOptions options, VaultCertificateStoreOptions vaultOptions, IVaultAuth vaultAuth)

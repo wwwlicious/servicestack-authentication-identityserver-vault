@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Security.Claims;
-    using System.Threading;
     using IdentityServer3.Contrib.Vault.CertificateStore;
     using IdentityServer3.Contrib.Vault.CertificateStore.Options;
     using IdentityServer3.Core.Configuration;
@@ -16,47 +16,8 @@
     {
         private static string VaultUrl = "http://127.0.0.1:8200";
 
-        public static string IdentityServerAppId = "146a3d05-2042-4855-93ba-1b122e70eb6d";
-        public static string IdentityServerUserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31";
-
-        public static string ServiceId = "service1";
-
         static void Main(string[] args)
         {
-            // 1. Initialize vault.
-            string rootToken;
-            string[] keys;
-            Console.WriteLine($"Initializing vault at {VaultUrl}");
-            VaultUrl.Initialize(out rootToken, out keys);
-
-            // 2. Unseal vault
-            Console.WriteLine($"Unsealing vault at {VaultUrl}");
-            VaultUrl.Unseal(keys);
-
-            Thread.Sleep(1000);
-
-            // 3. Create transit end-point for encryption / decryption keys
-            Console.WriteLine("Mount transit backend to create vault encryption keys");
-            VaultUrl.MountTransit(rootToken);
-            Console.WriteLine("Create encryption token for encrypting/decrypting secrets");
-            VaultUrl.CreateEncryptionKey(rootToken, ServiceId);
-
-            // 3.a Create PKI end-point for certificatey "stuff"
-            VaultUrl.MountPki(rootToken);
-            VaultUrl.MountTunePki(rootToken);
-            VaultUrl.GenerateRootCertificate(rootToken, "test.com", "87600h");
-            VaultUrl.SetCertificateUrlConfiguration(rootToken);
-            VaultUrl.GetCertificateUrlConfiguration(rootToken);
-            VaultUrl.GenerateCertificateRole(rootToken, "identity-server", "test.com");
-
-            // 5. Create app-id and user-id for the client that only have access to the secret end point
-            VaultUrl.EnableAppId(rootToken);
-
-            // Create Identity Server app-id/user-id credentials
-            VaultUrl.CreateAppId(rootToken, IdentityServerAppId, "root");
-            VaultUrl.CreateUserId(rootToken, IdentityServerUserId);
-            VaultUrl.MapUserIdsToAppIds(rootToken, IdentityServerUserId, IdentityServerAppId);
-
             IDisposable webApp = null;
 
             try
@@ -89,10 +50,10 @@
             };
 
             // Wire up Vault as being the X509 Certificate Signing Store
-            options.AddVaultCertificateStore(new VaultCertificateStoreAppIdOptions
+            options.AddVaultAppRoleCertificateStore(new VaultCertificateStoreAppRoleOptions
             {
-                AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",
-                UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31",
+                RoleId = ConfigurationManager.AppSettings["AppRoleId"],
+                SecretId = ConfigurationManager.AppSettings["AppSecretId"],
                 RoleName = "identity-server",
                 CommonName = "idsvr.test.com"
             });
@@ -110,7 +71,7 @@
                 new Client
                 {
                     ClientName = "ServiceStack.Vault.ClientSecrets.Demo",
-                    ClientId = "service1",
+                    ClientId = ConfigurationManager.AppSettings["ServiceName"],
                     Enabled = true,
 
                     AccessTokenType = AccessTokenType.Jwt,
@@ -145,7 +106,7 @@
                 new Scope
                 {
                     Enabled = true,
-                    Name = "service1",
+                    Name = ConfigurationManager.AppSettings["ServiceName"],
                     Type = ScopeType.Identity,
                     Claims = new List<ScopeClaim>
                     {

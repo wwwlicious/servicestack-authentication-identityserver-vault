@@ -12,17 +12,24 @@
     using IdentityModel;
     using IdentityServer4.Models;
     using IdentityServer4.Test;
-    using Serilog;
 
     using IdentityServer4.Contrib.Vault.CertificateStore;
     using IdentityServer4.Contrib.Vault.CertificateStore.Options;
+    using Microsoft.Extensions.Configuration;
 
     public class Startup
     {
+        public static IConfigurationRoot Configuration { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appSettings.json")
+                .Build();
+
             services.AddMvc();
 
             services.AddIdentityServer()
@@ -31,8 +38,8 @@
                 .AddInMemoryIdentityResources(IdentityResources.Get())
                 .AddVaultAppRoleCertificateStore(new VaultCertificateStoreAppRoleOptions
                 {
-                    RoleId = Program.AppRoleId,
-                    SecretId = Program.AppRoleSecretId,
+                    RoleId = Configuration.GetValue<string>("AppRoleId"),
+                    SecretId = Configuration.GetValue<string>("AppSecretId"),
 
                     RoleName = "identity-server",
                     CommonName = "idsvr.test.com"
@@ -42,8 +49,6 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddSerilog();
-
             app.UseDeveloperExceptionPage();
             app.UseIdentityServer();
 
@@ -61,7 +66,7 @@
                 new Client
                 {
                     ClientName = "ServiceStack.Vault.ClientSecrets.Demo",
-                    ClientId = "service1",
+                    ClientId = Startup.Configuration.GetValue<string>("ServiceName"),
                     Enabled = true,
 
                     AccessTokenType = AccessTokenType.Jwt,
@@ -104,7 +109,7 @@
                 new IdentityServer4.Models.IdentityResources.Email(),
                 new IdentityResource
                 {
-                    Name = "service1",
+                    Name = Startup.Configuration.GetValue<string>("ServiceName"),
                     Enabled = true,
                     UserClaims = new List<string>
                     {

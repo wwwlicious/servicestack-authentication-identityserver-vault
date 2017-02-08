@@ -176,3 +176,67 @@ function CreateAppRoleSecretId
     $app_role_response = ConvertFrom-Json $response
     return $app_role_response.data.secret_id
 }
+
+function MountPkiBackend
+{
+    Param(
+        [Parameter(Mandatory=$true)] [string] $root_token,
+        [Parameter(Mandatory=$true)] [string] $vault_url
+    )
+
+    Write-Host "Mount Pki Backend"
+    $root_tokenHeader = RootTokenHeader -root_token $root_token
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/sys/mounts/pki" -Method "Post" -Body "{`"type`":`"pki`"}"
+}
+
+function TunePkiBackend
+{
+    Param(
+        [Parameter(Mandatory=$true)] [string] $root_token,
+        [Parameter(Mandatory=$true)] [string] $vault_url,
+        [string] $max_lease_ttl = "87600h"
+    )
+
+    Write-Host "Tune Pki Backend with max_lease_ttl: $max_lease_ttl"
+    $root_tokenHeader = RootTokenHeader -root_token $root_token
+
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/sys/mounts/pki/tune" -Method "Post" -Body "{`"max_lease_ttl`":`"$max_lease_ttl`"}"
+}
+
+function GeneratePkiRootCertificate
+{
+    Param(
+        [Parameter(Mandatory=$true)] [string] $root_token,
+        [Parameter(Mandatory=$true)] [string] $vault_url,
+        [string] $cn = "test.com",
+        [string] $ttl = "87600h"
+    )
+
+    $root_tokenHeader = RootTokenHeader -root_token $root_token
+
+    Write-Host "Generating Pki Root Certificate"
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/pki/root/generate/internal" -Method "Post" -Body "{`"common_name`":`"$cn`",`"ttl`":`"$ttl`"}"
+
+    Write-Host "Set Vault as Certificate Authority"
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/pki/config/urls" -Method "Post" -Body "{`"issuing_certificates`":`"$vault_url/v1/pki/ca`", `"crl_distribution_points`":`"$vault_url/v1/pki/crl`"}"
+
+    Write-Host "Get Vault Certificate Authority"
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/pki/config/urls" -Method "Get"
+}
+
+function CreatePkiCertificateRole
+{
+    Param(
+        [Parameter(Mandatory=$true)] [string] $root_token,
+        [Parameter(Mandatory=$true)] [string] $vault_url,
+        [Parameter(Mandatory=$true)] [string] $role_name,
+        [string] $domains = "test.com",
+        [string] $allow_subdomains = "true",
+        [string] $max_ttl = "72h"
+    )
+
+    $root_tokenHeader = RootTokenHeader -root_token $root_token
+    
+    Write-Host "Generating Certificate Role $role_name for domains $domains"
+    Invoke-WebRequest -Headers $root_tokenHeader -Uri "$vault_url/v1/pki/roles/$role_name" -Method "Post" -Body "{`"allowed_domains`":`"$domains`",`"allow_subdomains`":$allow_subdomains, `"max_ttl`":`"$max_ttl`" }"
+}

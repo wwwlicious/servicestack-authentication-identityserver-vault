@@ -5,6 +5,7 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
 {
     public class Constants
     {
-        public const string PrivateKeyContainerName = "Idsvr";
+        public const string CertificateFriendlyName = "IdentityServerCertificate";
+        public const string PrivateKeyContainerName = "IdentityServerPrivateKey";
     }
 }

@@ -1,0 +1,26 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "ServiceStack.Core":  "1.0.33", 
+        "ServiceStack.HttpClient.Core": "1.0.33"
+      }
+    },
+
+    "net45": {
+      "dependencies": {
+        "ServiceStack":  "4.0.56", 
+        "ServiceStack.HttpClient": "4.0.56"
+      },
+      "buildOptions": {
+        "define": [ "NET45" ]
+      }
+    }
+  }
+}

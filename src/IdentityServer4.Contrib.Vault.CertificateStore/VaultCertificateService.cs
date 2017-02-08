@@ -13,15 +13,19 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
     {
         private readonly IVaultCertificateStore vaultClient;
         private readonly IX509Certificate2Helper certificate2Helper;
+        private readonly IRSACryptoServiceProviderHelper cryptoServiceProviderHelper;
 
         private X509Certificate2 certificate;
+        private RsaSecurityKey securityKey;
 
         public VaultCertificateService(
             IVaultCertificateStore vaultClient,
-            IX509Certificate2Helper certificateHelper)
+            IX509Certificate2Helper certificateHelper,
+            IRSACryptoServiceProviderHelper cryptoServiceProviderHelper)
         {
             this.vaultClient = vaultClient.ThrowIfNull(nameof(vaultClient));
             this.certificate2Helper = certificateHelper.ThrowIfNull(nameof(certificateHelper));
+            this.cryptoServiceProviderHelper = cryptoServiceProviderHelper.ThrowIfNull(nameof(cryptoServiceProviderHelper));
         }
 
         public SigningCredentials SigningCredentials
@@ -29,7 +33,7 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
             get
             {
                 GetNewCertificateFromVault();
-                return new SigningCredentials(new X509SecurityKey(certificate), "RS256");
+                return new SigningCredentials(securityKey, "RS256");
             }
         }
 
@@ -46,7 +50,10 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
 
             var vaultKey = vaultClient.GetCertificate();
 
-            certificate = certificate2Helper.CreateCertificate(vaultKey.Certificate, vaultKey.PrivateKey);        
+            certificate = certificate2Helper.CreateCertificate(vaultKey.Certificate);
+            var rsaProvider = cryptoServiceProviderHelper.GetPrivateKeyProvider(vaultKey.PrivateKey);
+
+            securityKey = new RsaSecurityKey(rsaProvider);
         }
     }
 }

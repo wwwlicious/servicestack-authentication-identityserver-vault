@@ -129,8 +129,10 @@
         {
             using (var client = new JsonServiceClient(vaultUri))
             {
+                var rules = new { rules = CreateRule(path, capabilities).ToJson() }.ToJson();
+
                 client.AddHeader("X-Vault-Token", rootToken);
-                client.Put<string>($"v1/sys/policy/{name}", new { rules = CreateRule(path, capabilities).ToJson() });
+                client.Put<string>($"v1/sys/policy/{name}", rules);
             }
         }
 

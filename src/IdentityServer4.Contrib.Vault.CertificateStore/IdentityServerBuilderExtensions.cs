@@ -34,6 +34,8 @@
 
         public static IIdentityServerBuilder AddVaultCertificateStore(this IIdentityServerBuilder builder, VaultCertificateStoreOptions vaultOptions)
         {
+            builder.Services.AddSingleton(vaultOptions);
+
             builder.Services.AddSingleton<IVaultClient>(resolver => new VaultClient(resolver.GetService<IVaultAuth>(), vaultOptions.VaultUrl, vaultOptions.VaultCertificate));
 
             builder.Services.AddSingleton<IVaultCertificateStore>(resolver => 

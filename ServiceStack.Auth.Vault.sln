@@ -15,12 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer3.Contrib.Vau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer3.Contrib.Vault.CertificateStore", "src\IdentityServer3.Contrib.Vault.CertificateStore\IdentityServer3.Contrib.Vault.CertificateStore.csproj", "{589BFE99-F92F-47CE-ABCB-A8711579A95A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Authentication.IdentityServer.Vault", "src\ServiceStack.Authentication.IdentityServer.Vault\ServiceStack.Authentication.IdentityServer.Vault.csproj", "{BC5582A8-7BBC-4FBE-9E97-7778614E827B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Vault.Core", "src\ServiceStack.Vault.Core\ServiceStack.Vault.Core.csproj", "{2029F967-E0F2-4BA3-BA16-DA8960B97AB2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Vault.SecretAppSettings", "src\ServiceStack.Vault.SecretAppSettings\ServiceStack.Vault.SecretAppSettings.csproj", "{02A29777-6A1D-48AD-936C-2A7B9470DB85}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer3.Contrib.Vault.CertificateStore.Tests", "test\IdentityServer3.Contrib.Vault.CertificateStore.Tests\IdentityServer3.Contrib.Vault.CertificateStore.Tests.csproj", "{CCB93332-1EBE-49B8-BC0A-4EB77622D040}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer3.Contrib.Vault.ClientSecretStore.Tests", "test\IdentityServer3.Contrib.Vault.ClientSecretStore.Tests\IdentityServer3.Contrib.Vault.ClientSecretStore.Tests.csproj", "{00AEDA5A-36F4-4681-9E42-60CDC8658D2D}"
@@ -62,6 +56,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer3", "Identity
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer4", "IdentityServer4", "{D710A4F3-209E-4C9B-8512-12E0C0D33DB2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceStack", "ServiceStack", "{8EDB38B4-74E3-43D2-8B8E-23A6DE719154}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceStack.Vault.Core", "src\ServiceStack.Vault.Core\ServiceStack.Vault.Core.xproj", "{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceStack.Authentication.IdentityServer.Vault", "src\ServiceStack.Authentication.IdentityServer.Vault\ServiceStack.Authentication.IdentityServer.Vault.xproj", "{C6939290-2D20-425F-9104-AF3B01C15590}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{547D7BF2-C0C1-4C88-BE68-5FF283253612}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Setup\SetupVault.ps1 = samples\Setup\SetupVault.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,18 +85,6 @@ Global
 		{589BFE99-F92F-47CE-ABCB-A8711579A95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{589BFE99-F92F-47CE-ABCB-A8711579A95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{589BFE99-F92F-47CE-ABCB-A8711579A95A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC5582A8-7BBC-4FBE-9E97-7778614E827B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC5582A8-7BBC-4FBE-9E97-7778614E827B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC5582A8-7BBC-4FBE-9E97-7778614E827B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC5582A8-7BBC-4FBE-9E97-7778614E827B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2029F967-E0F2-4BA3-BA16-DA8960B97AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2029F967-E0F2-4BA3-BA16-DA8960B97AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2029F967-E0F2-4BA3-BA16-DA8960B97AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2029F967-E0F2-4BA3-BA16-DA8960B97AB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02A29777-6A1D-48AD-936C-2A7B9470DB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02A29777-6A1D-48AD-936C-2A7B9470DB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02A29777-6A1D-48AD-936C-2A7B9470DB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02A29777-6A1D-48AD-936C-2A7B9470DB85}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCB93332-1EBE-49B8-BC0A-4EB77622D040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCB93332-1EBE-49B8-BC0A-4EB77622D040}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCB93332-1EBE-49B8-BC0A-4EB77622D040}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -148,6 +141,14 @@ Global
 		{BDCADE36-0C60-4520-8C32-EB069CFFD641}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDCADE36-0C60-4520-8C32-EB069CFFD641}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDCADE36-0C60-4520-8C32-EB069CFFD641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6939290-2D20-425F-9104-AF3B01C15590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6939290-2D20-425F-9104-AF3B01C15590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6939290-2D20-425F-9104-AF3B01C15590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6939290-2D20-425F-9104-AF3B01C15590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,9 +157,6 @@ Global
 		{EE4D6D28-199B-4909-9CBC-882DB5A186E8} = {B6B922FD-7378-4553-BD26-B601A1D3AD38}
 		{B47E5CB2-051E-4A5A-8D92-3C9AFD9F5EBD} = {B6B922FD-7378-4553-BD26-B601A1D3AD38}
 		{589BFE99-F92F-47CE-ABCB-A8711579A95A} = {B6B922FD-7378-4553-BD26-B601A1D3AD38}
-		{BC5582A8-7BBC-4FBE-9E97-7778614E827B} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
-		{2029F967-E0F2-4BA3-BA16-DA8960B97AB2} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
-		{02A29777-6A1D-48AD-936C-2A7B9470DB85} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
 		{CCB93332-1EBE-49B8-BC0A-4EB77622D040} = {5D64BFA0-F14A-4D32-B09E-7E650396B708}
 		{00AEDA5A-36F4-4681-9E42-60CDC8658D2D} = {5D64BFA0-F14A-4D32-B09E-7E650396B708}
 		{54659D4B-1565-45FD-9625-4E5F3A42E4AF} = {5D64BFA0-F14A-4D32-B09E-7E650396B708}
@@ -177,5 +175,9 @@ Global
 		{BDCADE36-0C60-4520-8C32-EB069CFFD641} = {B02EE3C6-0042-4C12-B043-6139D128680B}
 		{B6B922FD-7378-4553-BD26-B601A1D3AD38} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
 		{D710A4F3-209E-4C9B-8512-12E0C0D33DB2} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
+		{8EDB38B4-74E3-43D2-8B8E-23A6DE719154} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
+		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB} = {8EDB38B4-74E3-43D2-8B8E-23A6DE719154}
+		{C6939290-2D20-425F-9104-AF3B01C15590} = {8EDB38B4-74E3-43D2-8B8E-23A6DE719154}
+		{547D7BF2-C0C1-4C88-BE68-5FF283253612} = {B30A24E3-D843-4940-AD53-6E9CAE528977}
 	EndGlobalSection
 EndGlobal

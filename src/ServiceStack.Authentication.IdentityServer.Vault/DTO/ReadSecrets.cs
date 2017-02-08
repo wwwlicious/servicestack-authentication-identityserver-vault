@@ -1,8 +1,6 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
-namespace ServiceStack.Authentication.IdentityServer.Vault.DTO
+﻿namespace ServiceStack.Authentication.IdentityServer.Vault.DTO
 {
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.Text;
 
@@ -21,19 +19,23 @@ namespace ServiceStack.Authentication.IdentityServer.Vault.DTO
     [DataContract]
     public class ReadSecretsResponse
     {
+        [DataMember(Name = "request_id")]
+        public string RequestId { get; set; }
+
+        [DataMember(Name = "lease_id")]
+        public string LeaseId { get; set; }
+
+        [DataMember(Name = "renewable")]
+        public bool Renewable { get; set; }
+
         [DataMember(Name = "data")]
-        public SecretData Data { get; set; }
-
-        public T GetValue<T>()
-        {
-            return Encoding.UTF8.GetString(Data.Value).FromJson<T>();
-        }
+        public Dictionary<string, string> Data { get; set; }
     }
 
-    [DataContract]
-    public class SecretData
-    {
-        [DataMember(Name = "value")]
-        public byte[] Value { get; set; }
-    }
+    //[DataContract]
+    //public class SecretData 
+    //{
+    //    [DataMember(Name = "value")]
+    //    public byte[] Value { get; set; }
+    //}
 }

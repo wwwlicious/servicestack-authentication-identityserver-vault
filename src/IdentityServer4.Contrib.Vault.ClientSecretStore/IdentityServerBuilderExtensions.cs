@@ -46,7 +46,7 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
             return builder.AddVaultClientSecretStore(vaultOptions);
         }
 
-        public static IIdentityServerBuilder AddVaultClientSecretStore(
+        private static IIdentityServerBuilder AddVaultClientSecretStore(
             this IIdentityServerBuilder builder,
             VaultClientSecretStoreOptions vaultOptions)
         {

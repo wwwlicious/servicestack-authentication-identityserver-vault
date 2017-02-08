@@ -27,7 +27,7 @@
             {
                 using (var client = vaultUri.ServiceClient)
                 {
-                    var result = client.Post<AppRoleLogin, AppRoleLoginResult>($"v1/auth/approle/login", new AppRoleLogin
+                    var result = client.Post<AppRoleLogin, AppRoleLoginResult>("v1/auth/approle/login", new AppRoleLogin
                     {
                         RoleId = roleId,
                         SecretId = secretId

@@ -4,6 +4,6 @@
 
     public interface IX509Certificate2Helper
     {
-        X509Certificate2 CreateCertificate(byte[] certificateData, byte[] privateKeyData);
+        X509Certificate2 CreateCertificate(byte[] certificateData);
     }
 }

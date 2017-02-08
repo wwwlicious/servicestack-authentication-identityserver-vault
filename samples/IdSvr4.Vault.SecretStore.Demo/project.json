@@ -18,7 +18,9 @@
       "target": "project"
     },
     "ServiceStack.HttpClient.Core": "1.0.33",
-    "Serilog.Sinks.Seq": "3.2.0"
+    "Serilog.Sinks.Seq": "3.2.0",
+    "Microsoft.Extensions.Configuration": "1.1.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0"
   },
 
   "tools": {
@@ -43,7 +45,8 @@
   "publishOptions": {
     "include": [
       "wwwroot",
-      "web.config"
+      "web.config",
+      "appSettings.json"
     ]
   }
 }

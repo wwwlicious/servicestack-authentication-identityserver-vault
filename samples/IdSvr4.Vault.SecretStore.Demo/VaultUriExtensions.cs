@@ -139,16 +139,18 @@
             }
         }
 
-        public static void CreatePolicy(this string vaultUri, string rootToken, string name, string path, string policy)
+        public static void CreatePolicy(this string vaultUri, string rootToken, string name, string path, string[] capabilities)
         {
             using (var client = new JsonServiceClient(vaultUri))
             {
+                var values = CreateRule(path, capabilities).ToJson();
+
                 client.AddHeader("X-Vault-Token", rootToken);
-                client.Put<string>($"v1/sys/policy/{name}", new { rules = CreateRule(path, policy).ToJson() });
+                client.Put<string>($"v1/sys/policy/{name}", new { rules = CreateRule(path, capabilities).ToJson() });
             }
         }
 
-        private static JsonObject CreateRule(string path, string policy)
+        private static JsonObject CreateRule(string path, string[] capabilities)
         {
             return new JsonObject
             {
@@ -156,7 +158,7 @@
                 {
                     [path] = new JsonObject
                     {
-                        ["policy"] = policy
+                        ["capabilities"] = capabilities.ToJson()
                     }.ToJson()
                 }.ToJson()
             };
@@ -216,12 +218,26 @@
 
         public static string GetAppRoleId(this string vaultUri, string rootToken, string appRole)
         {
-            return null;
+            using (var client = new JsonServiceClient(vaultUri))
+            {
+                client.AddHeader("X-Vault-Token", rootToken);
+                var response = client.Get<JsonObject>($"v1/auth/approle/role/{appRole}/role-id");
+                var data = response.Get<JsonObject>("data");
+                return data["role_id"];
+            }
         }
 
         public static string GetAppRoleSecretId(this string vaultUri, string rootToken, string appRole)
         {
-            return null;
+            using (var client = new JsonServiceClient(vaultUri))
+            {
+                client.AddHeader("X-Vault-Token", rootToken);
+
+                var secretUrl = $"v1/auth/approle/role/{appRole}/secret-id";
+                var response = client.Post<JsonObject>(secretUrl, null);
+                var data = response.Get<JsonObject>("data");
+                return data["secret_id"];
+            }
         }
     }
 }

@@ -130,14 +130,6 @@
       <Project>{b47e5cb2-051e-4a5a-8d92-3c9afd9f5ebd}</Project>
       <Name>IdentityServer3.Contrib.Vault.ClientSecretStore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\ServiceStack.Authentication.IdentityServer.Vault\ServiceStack.Authentication.IdentityServer.Vault.csproj">
-      <Project>{bc5582a8-7bbc-4fbe-9e97-7778614e827b}</Project>
-      <Name>ServiceStack.Authentication.IdentityServer.Vault</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\ServiceStack.Vault.Core\ServiceStack.Vault.Core.csproj">
-      <Project>{2029f967-e0f2-4ba3-ba16-da8960b97ab2}</Project>
-      <Name>ServiceStack.Vault.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

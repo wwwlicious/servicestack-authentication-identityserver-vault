@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
@@ -14,14 +15,22 @@
     using IdentityServer4.Models;
     using IdentityServer4.Stores;
     using IdentityServer4.Test;
+    using Microsoft.Extensions.Configuration;
     using Serilog;
 
     public class Startup
     {
+        public static IConfigurationRoot Configuration { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appSettings.json")
+                .Build();
+
             services.AddMvc();
 
             services.AddIdentityServer()
@@ -29,10 +38,10 @@
                     .AddTestUsers(Users.Get())
                     .AddClientDataStore(resolver => new InMemoryClientDataStore())
                     .AddResourceDataStore(resolver => new InMemoryResourceDataStore())
-                    .AddVaultClientSecretStore(new VaultClientSecretStoreAppIdOptions
+                    .AddVaultAppRoleClientSecretStore(new VaultClientSecretStoreAppRoleOptions
                     {
-                        AppId = "146a3d05-2042-4855-93ba-1b122e70eb6d",
-                        UserId = "976c1095-a7b4-4b6f-8cd8-d71d860c6a31"
+                        RoleId = Configuration.GetValue<string>("AppRoleId"),
+                        SecretId = Configuration.GetValue<string>("AppSecretId")                     
                     });
         }
 
@@ -75,7 +84,7 @@
                 new Client
                 {
                     ClientName = "ServiceStack.Vault.ClientSecrets.Demo",
-                    ClientId = "service1",
+                    ClientId = Startup.Configuration.GetValue<string>("ServiceName"),
                     Enabled = true,
 
                     AccessTokenType = AccessTokenType.Jwt,
@@ -114,7 +123,7 @@
                 new IdentityServer4.Models.IdentityResources.Email(),
                 new IdentityResource
                 {
-                    Name = "service1",
+                    Name = Startup.Configuration.GetValue<string>("ServiceName"),
                     Enabled = true,
                     UserClaims = new List<string>
                     {

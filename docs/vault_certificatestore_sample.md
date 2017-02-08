@@ -12,6 +12,7 @@ When the project starts, you should be presented with a simple ServiceStack web 
 
 ### Prerequisites
 * Have an unitialised instance of Vault running locally on port 8200.  See below for instructions.
+* Run the Setup_Samples.ps1 powershell script, located in /samples/Setup (must be run from the directory it is located in).
 
 #### Starting an instance of vault
 Having downloaded and extracted the Vault.exe, start an unitialised instance of Vault, run the following vault command:
@@ -26,3 +27,4 @@ listener "tcp" {
     tls_disable = 1
 }
 ```
+

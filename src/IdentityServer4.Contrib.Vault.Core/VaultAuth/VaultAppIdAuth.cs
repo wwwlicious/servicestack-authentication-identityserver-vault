@@ -5,6 +5,7 @@ namespace IdentityServer4.Contrib.Vault.Core.VaultAuth
 {
     using System;
     using DTO;
+    using Exceptions;
     using Helpers;
     using Interfaces;
     using Microsoft.Extensions.Logging;
@@ -50,7 +51,7 @@ namespace IdentityServer4.Contrib.Vault.Core.VaultAuth
             catch (Exception exception)
             {
                 logger.LogError("Unable to authenticate client using AppId", exception);
-                throw;
+                throw new AuthenticationException("Unable to authenticate client using AppId", exception);
             }
         }
 

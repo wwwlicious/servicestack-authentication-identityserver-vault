@@ -63,7 +63,8 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
             catch (Exception exception)
             {
                 logger.LogError("Unable to retrieve scope secrets", exception);
-                return new string[0];
+
+                throw new InvalidOperationException("Unable to retrieve scope secrets", exception);
             }
         }
 

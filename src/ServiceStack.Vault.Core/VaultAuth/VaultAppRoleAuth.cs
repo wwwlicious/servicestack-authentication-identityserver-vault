@@ -40,7 +40,7 @@ namespace ServiceStack.Vault.Core.VaultAuth
             catch (Exception exception)
             {
                 Log.Error("Unable to authenticate client using AppRole", exception);
-                throw;
+                throw new AuthenticationException("Unable to authenticate client using AppRole", exception);
             }
         }
 

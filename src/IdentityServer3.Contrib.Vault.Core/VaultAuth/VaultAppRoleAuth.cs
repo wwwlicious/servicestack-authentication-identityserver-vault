@@ -44,7 +44,9 @@ namespace IdentityServer3.Contrib.Vault.Core.VaultAuth
                     {
                         if (result?.Errors != null)
                         {
-                            Logger.ErrorFormat("Unable to authenticate client using AppRole - Errors: [{0}]", string.Join(",", result.Errors));
+                            var error = $"Unable to authenticate client using AppRole - Errors: [{string.Join(",", result.Errors)}]";
+                            Logger.Error(error);
+                            throw new UnauthorizedAccessException(error);
                         }
                     }
                 }
@@ -52,7 +54,7 @@ namespace IdentityServer3.Contrib.Vault.Core.VaultAuth
             catch (Exception exception)
             {
                 Logger.ErrorException("Unable to authenticate client using AppId", exception);
-                throw;
+                throw new UnauthorizedAccessException("Unable to authenticate client using AppId", exception);
             }
         }
     }

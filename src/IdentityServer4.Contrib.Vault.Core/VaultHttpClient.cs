@@ -12,7 +12,7 @@ namespace IdentityServer4.Contrib.Vault.Core
     using Interfaces;
     using Newtonsoft.Json;
 
-    class VaultHttpClient : IVaultHttpClient
+    internal class VaultHttpClient : IVaultHttpClient
     {
         private readonly HttpClient httpClient;
 

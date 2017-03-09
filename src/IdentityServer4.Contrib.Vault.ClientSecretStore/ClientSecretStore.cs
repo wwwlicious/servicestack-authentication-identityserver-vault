@@ -37,7 +37,7 @@ namespace IdentityServer4.Contrib.Vault.ClientSecretStore
 
             var clientSecrets = new List<Secret>(client.ClientSecrets);
 
-            var secrets = secretStore.GetSecrets(clientId).Result;
+            var secrets = await secretStore.GetSecrets(clientId);
             if (secrets != null && secrets.Length > 0)
             {
                 foreach (var secret in secrets)

@@ -7,6 +7,7 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore.Helpers
     using System.IO;
     using System.Security.Cryptography.X509Certificates;
     using Core.Helpers;
+    using Exceptions;
     using Interfaces;
     using Microsoft.Extensions.Logging;
 
@@ -36,7 +37,7 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore.Helpers
             catch (Exception exception)
             {
                 logger.LogError($"Unable to create certificate from {file}", exception);
-                throw;
+                throw new FailedOperationException($"Error loading file from {file}");
             }
             finally
             {

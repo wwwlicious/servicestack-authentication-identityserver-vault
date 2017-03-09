@@ -11,6 +11,8 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
 
     public class VaultCertificateService : IVaultCertificateService
     {
+        private const string EncryptionAlgorithm = "RS256";
+
         private readonly IVaultCertificateStore vaultClient;
         private readonly IX509Certificate2Helper certificate2Helper;
         private readonly IRSACryptoServiceProviderHelper cryptoServiceProviderHelper;
@@ -33,7 +35,7 @@ namespace IdentityServer4.Contrib.Vault.CertificateStore
             get
             {
                 GetNewCertificateFromVault();
-                return new SigningCredentials(securityKey, "RS256");
+                return new SigningCredentials(securityKey, EncryptionAlgorithm);
             }
         }
 

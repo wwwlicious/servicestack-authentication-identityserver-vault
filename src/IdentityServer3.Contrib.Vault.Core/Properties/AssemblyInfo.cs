@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IdentityServer3.Contrib.Vault.Core")]
 [assembly: AssemblyDescription("A core project for the IdentityServer plugins for Vault.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MacLean Electrical")]
+[assembly: AssemblyCompany("wwwlicious")]
 [assembly: AssemblyProduct("IdentityServer3.Contrib.Vault.Core")]
 [assembly: AssemblyCopyright("Copyright ©2016")]
 [assembly: AssemblyTrademark("")]

@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IdentityServer3.Contrib.Vault.ClientSecretStore")]
 [assembly: AssemblyDescription("IdentityServer plugin for storing ClientSercrets in Vault when interaction with ServiceStack plugin ServiceStack.Authentication.IdentityServer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MacLean Electrical")]
+[assembly: AssemblyCompany("wwwlicious")]
 [assembly: AssemblyProduct("IdentityServer3.Contrib.Vault.ClientSecretStore")]
 [assembly: AssemblyCopyright("Copyright ©2016")]
 [assembly: AssemblyTrademark("")]

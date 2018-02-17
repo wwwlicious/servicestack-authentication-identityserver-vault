@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IdentityServer3.Contrib.Vault.CertificateStore")]
 [assembly: AssemblyDescription("An IdentityServer plugin for manging X509 Certificates in Vault.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MacLean Electrical")]
+[assembly: AssemblyCompany("wwwlicious")]
 [assembly: AssemblyProduct("IdentityServer3.Contrib.Vault.CertificateStore")]
 [assembly: AssemblyCopyright("Copyright ©2016")]
 [assembly: AssemblyTrademark("")]

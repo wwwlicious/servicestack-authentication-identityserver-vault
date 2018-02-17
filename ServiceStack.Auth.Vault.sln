@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26114.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}"
 EndProject
@@ -25,16 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Authentication
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Vault.SecretAppSettings.Tests", "test\ServiceStack.Vault.SecretAppSettings.Tests\ServiceStack.Vault.SecretAppSettings.Tests.csproj", "{6971FE0A-D26A-47E0-8F6F-65414D3BBC06}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdentityServer4.Contrib.Vault.Core", "src\IdentityServer4.Contrib.Vault.Core\IdentityServer4.Contrib.Vault.Core.xproj", "{9DA06E73-B9B2-42A2-BEC4-9D783F5036E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Contrib.Vault.Core", "src\IdentityServer4.Contrib.Vault.Core\IdentityServer4.Contrib.Vault.Core.csproj", "{9DA06E73-B9B2-42A2-BEC4-9D783F5036E8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdentityServer4.Contrib.Vault.ClientSecretStore", "src\IdentityServer4.Contrib.Vault.ClientSecretStore\IdentityServer4.Contrib.Vault.ClientSecretStore.xproj", "{93517B6A-8F14-4A47-92BF-1D9E4DE2992B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Contrib.Vault.ClientSecretStore", "src\IdentityServer4.Contrib.Vault.ClientSecretStore\IdentityServer4.Contrib.Vault.ClientSecretStore.csproj", "{93517B6A-8F14-4A47-92BF-1D9E4DE2992B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdentityServer4.Contrib.Vault.CertificateStore", "src\IdentityServer4.Contrib.Vault.CertificateStore\IdentityServer4.Contrib.Vault.CertificateStore.xproj", "{21F713B1-A2B5-457A-9619-7AE235BC737A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{58C083D9-4100-4DC7-AD51-6FAFE787BB2A}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Contrib.Vault.CertificateStore", "src\IdentityServer4.Contrib.Vault.CertificateStore\IdentityServer4.Contrib.Vault.CertificateStore.csproj", "{21F713B1-A2B5-457A-9619-7AE235BC737A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdSvr3.Vault.CertStore.Demo", "samples\IdSvr3.Vault.CertStore.Demo\IdSvr3.Vault.CertStore.Demo.csproj", "{493837BD-460D-43E0-8EC4-B71C5072125A}"
 EndProject
@@ -48,9 +43,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdSvr3.Vault.SecretStore.De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Vault.SecretStore.ClientDemo", "samples\ServiceStack.Vault.SecretStore.ClientDemo\ServiceStack.Vault.SecretStore.ClientDemo.csproj", "{6DF4CD1C-7A36-403D-8729-7F643990225E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdSvr4.Vault.CertStore.Demo", "samples\IdSvr4.Vault.CertStore.Demo\IdSvr4.Vault.CertStore.Demo.xproj", "{1983FE6F-A7EE-426B-A994-BFA456ED6A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdSvr4.Vault.CertStore.Demo", "samples\IdSvr4.Vault.CertStore.Demo\IdSvr4.Vault.CertStore.Demo.csproj", "{1983FE6F-A7EE-426B-A994-BFA456ED6A7F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IdSvr4.Vault.SecretStore.Demo", "samples\IdSvr4.Vault.SecretStore.Demo\IdSvr4.Vault.SecretStore.Demo.xproj", "{BDCADE36-0C60-4520-8C32-EB069CFFD641}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdSvr4.Vault.SecretStore.Demo", "samples\IdSvr4.Vault.SecretStore.Demo\IdSvr4.Vault.SecretStore.Demo.csproj", "{BDCADE36-0C60-4520-8C32-EB069CFFD641}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer3", "IdentityServer3", "{B6B922FD-7378-4553-BD26-B601A1D3AD38}"
 EndProject
@@ -58,9 +53,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer4", "Identity
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceStack", "ServiceStack", "{8EDB38B4-74E3-43D2-8B8E-23A6DE719154}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceStack.Vault.Core", "src\ServiceStack.Vault.Core\ServiceStack.Vault.Core.xproj", "{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Vault.Core", "src\ServiceStack.Vault.Core\ServiceStack.Vault.Core.csproj", "{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ServiceStack.Authentication.IdentityServer.Vault", "src\ServiceStack.Authentication.IdentityServer.Vault\ServiceStack.Authentication.IdentityServer.Vault.xproj", "{C6939290-2D20-425F-9104-AF3B01C15590}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStack.Authentication.IdentityServer.Vault", "src\ServiceStack.Authentication.IdentityServer.Vault\ServiceStack.Authentication.IdentityServer.Vault.csproj", "{C6939290-2D20-425F-9104-AF3B01C15590}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{547D7BF2-C0C1-4C88-BE68-5FF283253612}"
 	ProjectSection(SolutionItems) = preProject
@@ -178,6 +173,5 @@ Global
 		{8EDB38B4-74E3-43D2-8B8E-23A6DE719154} = {B1FCA409-8407-4D7E-A1D9-3B6BF044A6AA}
 		{EE2197F3-7276-4CF1-ABAB-9C21F03AD3DB} = {8EDB38B4-74E3-43D2-8B8E-23A6DE719154}
 		{C6939290-2D20-425F-9104-AF3B01C15590} = {8EDB38B4-74E3-43D2-8B8E-23A6DE719154}
-		{547D7BF2-C0C1-4C88-BE68-5FF283253612} = {B30A24E3-D843-4940-AD53-6E9CAE528977}
 	EndGlobalSection
 EndGlobal

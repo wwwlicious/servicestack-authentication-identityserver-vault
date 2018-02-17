@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ServiceStack.Vault.SecretAppSettings.Tests")]
 [assembly: AssemblyDescription("Unit Tests for ServiceStack.Vault.SecretAppSettings")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MacLean Electrical")]
+[assembly: AssemblyCompany("wwwlicious")]
 [assembly: AssemblyProduct("ServiceStack.Vault.SecretAppSettings.Tests")]
 [assembly: AssemblyCopyright("Copyright ©2016")]
 [assembly: AssemblyTrademark("")]

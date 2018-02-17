@@ -42,12 +42,8 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
             Logger.Debug("Start parsing Basic Authentication secret");
 
             var header = contextParser.HeaderDictionary(environment);
-            if (header == null)
-            {
-                return null;
-            }
 
-            var authorizationHeader = header.Get("Authorization");
+            var authorizationHeader = header?.Get("Authorization");
             if (authorizationHeader == null)
             {
                 return null;

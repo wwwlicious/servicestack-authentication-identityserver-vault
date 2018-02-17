@@ -38,12 +38,8 @@ namespace IdentityServer3.Contrib.Vault.ClientSecretStore
             Logger.Debug("Start parsing for secret in post body");
 
             var body = await parser.ReadRequestFormAsync(environment).ConfigureAwait(false);
-            if (body == null)
-            {
-                return null;
-            }
 
-            var id = body.Get("client_id");
+            var id = body?.Get("client_id");
             if (string.IsNullOrWhiteSpace(id))
             {
                 return null;
